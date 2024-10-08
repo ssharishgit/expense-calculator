@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income Expense Calculator</title>
+
+  <link rel="stylesheet" href="./src/css/index.css">
+  <script src="https://use.fontawesome.com/3409fbc758.js"></script>
+  <script defer src="./src/scripts/index.js"></script>
+  <style>
+    .custom-disabled{
+      pointer-events: none;
+      opacity: 0.3;
+    }
+  </style>
+</head>
+<body class="bg-[#E6E6FA]">
+  <!-- heading information  -->
+  <div class="grid grid-cols-12 border-b-2 border-zinc-100">
+    <div class="col-span-8">
+      <h1 class="sm:text-right xxs:text-center lg:text-4xl md:text-3xl sm:text-2xl xxs:text-lg font-bold lg:py-8 sm:py-8 xxs:py-4 font-serif">
+        Income Expense Calculator
+      </h1>
+    </div>
+
+    <!-- total amount  -->
+    <div class="lg:col-start-11 lg:col-span-2 md:col-start-10 md:col-span-3 sm:col-start-10 sm:col-span-3 xxs:col-span-4">
+      <div id="total" class="py-4 lg:text-base md:text-sm sm:text-xs xxs:text-[8px]">
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Entry -->
+  <div class="grid grid-cols-12 py-8 lg:mx-[3%] md:mx-[3%] xxs:mx-0">
+    <div class="col-span-4 lg:text-lg md:text-base sm:text-sm xs:text-xs xxs:text-[10px]">
+      <div class="lg:flex lg:gap-x-8 justify-center items-center">
+        <div class="font-medium">Select Entry:</div>
+        <div class="py-2 ">
+          <input type="radio" id="income" name="transaction" value="income" checked>
+          <label class="pr-2" for="income">Income</label>
+          <input type="radio" id="expense" name="transaction" value="expense">
+          <label for="expense">Expense</label>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-4 lg:text-lg md:text-base sm:text-sm xs:text-xs xxs:text-[10px]">
+      <div class="md:w-4/5 lg:flex lg:gap-x-8 items-center">
+        <label for="description" class="font-medium capitalize">description:</label>
+        <input type="text" name="description" id="description" class="md:w-2/3 xxs:w-4/5 rounded-md p-2" placeholder="Enter details">
+      </div>
+    </div>
+    <div class="col-span-2 md:flex justify-evenly items-center lg:text-lg md:text-base sm:text-sm xs:text-xs xxs:text-[10px]">
+      <label for="amount" class="font-medium capitalize">amount:</label>
+      <input type="number" name="amount" id="amount" class="w-1/2 rounded-md p-2" placeholder="0.00">
+    </div>
+    <div class="col-span-2 sm:pl-4 lg:text-lg md:text-base sm:text-sm xs:text-xs xxs:text-[10px]">
+      <button id="add-btn" onclick="addDetails()"
+       class="bg-emerald-600 sm:px-3 sm:py-2 xs:px-2 xxs:px-2 xxs:py-1 font-medium text-white rounded-md hover:bg-emerald-500">
+        <i class="fa fa-plus sm:pr-2 xxs:pr-0.5" aria-hidden="true"></i>Add
+      </button>
+      <button id="edit-btn" onclick="updateDetails()"
+       class="bg-cyan-600 sm:px-3 sm:py-2 xs:px-2 xs:py-1 font-medium text-white rounded-md hover:bg-cyan-500 hidden">
+        <i class="fa fa-pencil-square-o sm:pr-2 xxs:pr-0.5" aria-hidden="true"></i>Update
+      </button>
+    </div>
+  </div>
+
+  <div class="border-t-2 border-zinc-100 lg:text-xl md:text-lg sm:text-sm xs:text-xs xxs:text-[10px]">
+    <div onchange="getAll()" class="flex lg:gap-x-12 md:gap-x-12 sm:gap-x-8 xs:gap-x-2  justify-center items-center py-6 font-serif">
+      <div id="all-details-div">
+        <input type="radio" id="all-details" name="details" value="all" checked>
+        <label for="all-details">All details</label>
+      </div>
+      <div id="income-details-div">
+        <input type="radio" id="income-details" name="details" value="income">
+        <label for="income-details">Income details</label>
+      </div>
+      <div id="expense-details-div">
+        <input type="radio" id="expense-details" name="details" value="expense">
+        <label for="expense-details">Expense details</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heading container -->
+  <div class="grid grid-cols-10 lg:mx-[3%] md:mx-[3%] xxs:mx-0 py-3 bg-violet-500 text-white text-center text-xl font-semibold
+              lg:text-xl md:text-lg sm:text-base xs:text-sm xxs:text-xs">
+    <div class="col-span-2">
+      <p>Details</p>
+    </div>
+    <div class="col-span-2">
+      <p>Type</p>
+    </div>
+    <div class="col-span-2">
+      <p>Amount</p>
+    </div>
+    <div class="col-span-4">
+      <p>Action buttons</p>
+    </div>
+  </div>
+
+  <!-- Main container -->
+  <div id="container" class="grid gap-y-6 grid-cols-10 lg:mx-[3%] md:mx-[3%] xxs:mx-0 py-3 bg-neutral-100 text-center
+                              lg:text-lg md:text-base sm:text-xs xs:text-[10px] xxs:text-[8px]">
+    <div class="col-span-2">
+      <p class="text-lg">1.sample</p>
+    </div>
+    <div class="col-span-2">
+      <p class="text-lg">Income</p>
+    </div>
+    <div class="col-span-2">
+      <p class="text-lg">500</p>
+    </div>
+    <div class="col-span-2">
+      <button class="bg-cyan-600 px-3 py-1 font-medium text-white rounded-md hover:bg-cyan-500">
+        <i class="fa fa-pencil-square-o pr-2" aria-hidden="true"></i>Update
+      </button>
+    </div>
+    <div class="col-span-2">
+      <button class="bg-red-600 px-3 py-1 font-medium text-white rounded-md hover:bg-red-500">
+        <i class="fa fa-trash pr-2" aria-hidden="true"></i>Delete
+      </button>
+    </div>
+  </div>
+
+</body>
+</html>
